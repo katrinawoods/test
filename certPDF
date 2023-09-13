@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Integrity Certificate</title>
+
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .certificate {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #001f3f;
+            background-color: #fff;
+            color: #001f3f;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #001f3f;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #001f3f;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #001f3f;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="certificate">
+        <h1>Academic Integrity Certificate</h1>
+        <p>Congratulations! <span id="name"></span> has completed the Academic Integrity training course.</p>
+        <p>Please confirm your name:</p>
+        <input type="text" id="nameInput" placeholder="Your Name">
+        <br>
+        <input type="submit" id="generatePDF" value="Generate PDF">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.0/html2pdf.bundle.min.js"></script>
+    <script>
+        // JavaScript to handle the user input and generate a PDF
+        document.getElementById("nameInput").addEventListener("input", function() {
+            document.getElementById("name").innerText = this.value;
+        });
+
+        document.getElementById("generatePDF").addEventListener("click", function() {
+            const certificate = document.querySelector(".certificate");
+            const pdfOptions = {
+                margin: 10,
+                filename: 'academic_integrity_certificate.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate the PDF
+            html2pdf().from(certificate).set(pdfOptions).outputPdf();
+        });
+    </script>
+</body>
+</html>
